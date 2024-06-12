@@ -7,8 +7,8 @@ Created on Wed Jun 12 14:28:44 2024
 
 class struct:
     fieldnames = []
-    c2stats = []
     c1stats = []
+    c2stats = []
     
     def __init__(self, a, b):
         self.country1 = a
