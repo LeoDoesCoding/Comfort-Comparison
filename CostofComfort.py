@@ -1,4 +1,5 @@
 import tkinter as tk
+import CSVextractor as extract
 from tkinter import ttk
 from tkinter import messagebox
 
@@ -32,7 +33,7 @@ def update_countries(event):
         else:
             combo_box2_country['values'] = []
 
-def on_compare():
+def on_compare():    
     # Function to handle the compare button click
     country1 = combo_box1_country.get()
     country2 = combo_box2_country.get()
@@ -48,6 +49,8 @@ def on_compare():
         return
 
     # Create a new window for comparison results
+    data = extract.getData(country1, country2) #Get data
+    
     comparison_window = tk.Toplevel(root)
     comparison_window.title("Comparison Result")
 
@@ -59,9 +62,8 @@ def on_compare():
     tree.heading("Attribute", text=country2)
 
     # Add comparison data to the treeview
-    attributes = ["Avg Car Cost", "Avg Home Cost",]
-    for attribute in attributes:
-        tree.insert("", "end", text=attribute, values=("Value 1", "Value 2"))
+    for i in range (0, len(data.fieldnames)):
+        tree.insert("", "end", text=data.fieldnames[i], values=(data.c1stats[i], data.c2stats[i]))
 
     tree.pack(expand=True, fill="both")
 
