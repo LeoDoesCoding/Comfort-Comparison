@@ -4,13 +4,12 @@ from tkinter import messagebox
 
 # Sample data for countries by continent
 continent_countries = {
-    "Asia": ["China", "India", "Japan", "South Korea"],
-    "Africa": ["Nigeria", "Egypt", "South Africa", "Kenya"],
-    "North America": ["United States", "Canada", "Mexico"],
-    "South America": ["Brazil", "Argentina", "Colombia", "Chile"],
-    "Europe": ["Germany", "France", "United Kingdom", "Italy"],
-    "Australia": ["Australia", "New Zealand"],
-    "Antarctica": []
+    "Asia": ["Thailand"],
+    "Africa": ["Nigeria"],
+    "North America": ["US"],
+    "South America": ["Argentina"],
+    "Europe": ["UK"],
+    "Australia": ["New Zealand"],
 }
 
 def update_countries(event):
@@ -43,15 +42,28 @@ def on_compare():
         messagebox.showwarning("Warning", "Please select both countries.")
         return
 
-    comparison_text = f"Comparing {country1} and {country2}"
+    # Check if the selected countries are different
+    if country1 == country2:
+        messagebox.showwarning("Warning", "Please select different countries to compare.")
+        return
 
-    # Create a new window
-    new_window = tk.Toplevel(root)
-    new_window.title("Comparison Result")
+    # Create a new window for comparison results
+    comparison_window = tk.Toplevel(root)
+    comparison_window.title("Comparison Result")
 
-    # Add a label to display the comparison result
-    label_result = tk.Label(new_window, text=comparison_text, font=("Arial", 12))
-    label_result.pack(padx=10, pady=5)
+    # Create a treeview widget for the table
+    tree = ttk.Treeview(comparison_window)
+    tree["columns"] = ("Country", "Attribute")
+    tree.heading("#0", text=" ")
+    tree.heading("Country", text=country1)
+    tree.heading("Attribute", text=country2)
+
+    # Add comparison data to the treeview
+    attributes = ["Avg Car Cost", "Avg Home Cost",]
+    for attribute in attributes:
+        tree.insert("", "end", text=attribute, values=("Value 1", "Value 2"))
+
+    tree.pack(expand=True, fill="both")
 
 # Main window
 root = tk.Tk()
