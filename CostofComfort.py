@@ -56,15 +56,15 @@ def on_compare():
 
     # Create a treeview widget for the table
     tree = ttk.Treeview(comparison_window)
-    tree["columns"] = ("Country", "Attribute")
+    tree["columns"] = ("Country", "Attribute", "Difference")
     tree.heading("#0", text=" ")
     tree.heading("Country", text=country1)
     tree.heading("Attribute", text=country2)
+    tree.heading("Difference", text="Difference (%)")
 
     # Add comparison data to the treeview
     for i in range (0, len(data.fieldnames)):
-        tree.insert("", "end", text=data.fieldnames[i], values=(data.c1stats[i], data.c2stats[i]))
-
+        tree.insert("", "end", text=data.fieldnames[i], values=(data.c1stats[i], data.c2stats[i],  str(round(((data.c2stats[i] - data.c1stats[i])/data.c1stats[i]) * 100, 2)) + "%"))
     tree.pack(expand=True, fill="both")
 
 # Main window
